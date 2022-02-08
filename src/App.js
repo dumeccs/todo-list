@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import { Tasks } from './Component/Tasks';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+import { Header } from './Component/Header';
+import { Addtask } from './Component/Addtask';
+
+export default function App() {
+  const [tasks, setTask] = useState(
+    [
+
+    
+      {
+          id: 1,
+          text: 'Chris birthday',
+          day: 'Feb 5th at 2:30pm',
+          reminder: true,
+      },
+      {
+          id: 2,
+          text: 'Meeting at school',
+          day: 'Feb 6th at 1:30pm',
+          reminder: true,
+      },
+      {
+          id: 3,
+          text: 'Eat buffet with the gang',
+          day: 'Feb 14th at 1:30pm',
+          reminder: true,
+      }
+  
+  ]
+  )
+  
+//
+const [toggle,setToggle] = useState(false)
+const toggleAdd = () =>{
+  setToggle(prevState => !prevState)
 }
 
-export default App;
+
+const addTask = (task) =>{
+  const id = Math.floor(Math.random() * 10000) + 1
+  const newTask = {id,...task}
+  const updatedTask =([...tasks,newTask])
+  setTask(updatedTask)
+}
+
+
+  // delete task
+  function deleteTask(id){
+    setTask(tasks.filter(task => task.id !== id))
+  }
+  
+  // Sets a reminder
+  function toggleReminder(id){
+    setTask(prevState => {
+      return prevState.map(task=>{
+    
+        return task.id === id ? {...task, reminder: !task.reminder} : task
+      })
+    })
+  }
+
+  return (
+  <div className='container'> 
+     <Header setToggle = {toggleAdd} />
+    {toggle && <Addtask onAdd = {addTask}/>}
+    {tasks.length > 0 ?<Tasks tasks={tasks} onDelete = {deleteTask} onToggle={toggleReminder}/> : <h3>Add a task</h3> }
+   
+    
+   
+  </div>);
+};
