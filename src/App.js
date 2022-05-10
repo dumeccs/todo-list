@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import { Tasks } from './Component/Tasks';
-
-
 import { Header } from './Component/Header';
 import { Addtask } from './Component/Addtask';
 
@@ -46,6 +44,31 @@ const addTask = (task) =>{
   setTask(updatedTask)
 }
 
+// set a new state to handle the new task you wanna add
+
+const [taskEdit, setTaskEdit] = useState({
+  item:{},
+  edited:false
+})
+
+
+
+const editTaskFunc = (item) => {
+    setTaskEdit(
+      {
+        item,
+        edited:true
+      }
+    )
+}
+
+  //update task
+
+
+  const updateTask = (id, updTask) => {
+    console.log(updTask)
+  }
+
 
   // delete task
   function deleteTask(id){
@@ -63,12 +86,13 @@ const addTask = (task) =>{
   }
 
   return (
+
   <div className='container'> 
-     <Header setToggle = {toggleAdd} />
-    {toggle && <Addtask onAdd = {addTask}/>}
-    {tasks.length > 0 ?<Tasks tasks={tasks} onDelete = {deleteTask} onToggle={toggleReminder}/> : <h3>Add a task</h3> }
-   
-    
-   
+
+    <Header setToggle = {toggleAdd}  text = {toggle ? "Close" : "Add"} color={toggle ? 'red' : 'green'}/>
+    {toggle && <Addtask onAdd = {addTask} taskEdit={taskEdit} editTask={editTaskFunc} task={tasks} updateTask={updateTask}/>}
+    {tasks.length > 0 ?<Tasks tasks={tasks} onDelete = {deleteTask} onToggle={toggleReminder} editTaskFunc={editTaskFunc}/> : <h3>Add a task</h3> }
+
   </div>);
+
 };

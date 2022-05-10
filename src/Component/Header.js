@@ -4,7 +4,7 @@ import { Button } from './Button';
 
 
 
-export const Header = ({title, setToggle}) => {
+export const Header = ({title, setToggle, text, color}) => {
     // const onClick = (e) =>{
     //     return console.log(e)
     // }
@@ -13,7 +13,7 @@ export const Header = ({title, setToggle}) => {
 
     <header className="header">
         <h1>{title}</h1>
-        <Button setToggle={setToggle} color="green" text="Add" />
+        <Button setToggle={setToggle} text = {text} color={color}/>
     </header>
   ); 
   
