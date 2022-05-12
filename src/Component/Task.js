@@ -1,7 +1,7 @@
 import React from 'react';
 import {FaTimes, FaEdit} from "react-icons/fa/index.esm"
 
-export const Task = ({task,onDelete,onToggle,editTaskFunc}) => {
+export const Task = ({task,onDelete,onToggle,editTask}) => {
  
   return (
   <div className ={`task ${task.reminder ? "reminder" : ''}` } onDoubleClick={()=>onToggle(task.id)}>
@@ -9,7 +9,7 @@ export const Task = ({task,onDelete,onToggle,editTaskFunc}) => {
         
           {task.text}
           <FaEdit 
-            onClick = {()=>editTaskFunc(task)}
+            onClick={() => editTask(task)}
           /> 
           <FaTimes 
           style={{color :"red"}} 

@@ -46,28 +46,22 @@ const addTask = (task) =>{
 
 // set a new state to handle the new task you wanna add
 
-const [taskEdit, setTaskEdit] = useState({
-  item:{},
-  edited:false
+
+const [extTask, setExtTask] = useState({
+    task:{},
+    edited:false
 })
 
 
-
-const editTaskFunc = (item) => {
-    setTaskEdit(
-      {
-        item,
-        edited:true
-      }
-    )
+const editTask = (task) =>{
+  setExtTask({
+    task,
+    edit:true
+  })
 }
-
   //update task
 
 
-  const updateTask = (id, updTask) => {
-    console.log(updTask)
-  }
 
 
   // delete task
@@ -90,8 +84,8 @@ const editTaskFunc = (item) => {
   <div className='container'> 
 
     <Header setToggle = {toggleAdd}  text = {toggle ? "Close" : "Add"} color={toggle ? 'red' : 'green'}/>
-    {toggle && <Addtask onAdd = {addTask} taskEdit={taskEdit} editTask={editTaskFunc} task={tasks} updateTask={updateTask}/>}
-    {tasks.length > 0 ?<Tasks tasks={tasks} onDelete = {deleteTask} onToggle={toggleReminder} editTaskFunc={editTaskFunc}/> : <h3>Add a task</h3> }
+    {toggle && <Addtask onAdd = {addTask}  task={tasks} extTask={extTask} />}
+    {tasks.length > 0 ?<Tasks tasks={tasks} onDelete = {deleteTask} onToggle={toggleReminder} editTask = {editTask} /> : <h3>Add a task</h3> }
 
   </div>);
 

@@ -3,21 +3,19 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 
-export const Addtask = ({onAdd,editTaskFunc,taskEdit,tasks,updateTask}) => {
+export const Addtask = ({onAdd,extTask}) => {
     const [text,setText] = useState('')
     const [day,setDay] = useState('')
     const [reminder,setReminder] = useState(false)
 
-
     useEffect(() => {
- 
-        if(editTaskFunc.edited === true){
-            setText(editTaskFunc.item.text)
-            setDay(editTaskFunc.item.day)
-            setReminder(editTaskFunc.item.reminder)
+        if(extTask.edit === true){
+            setText(extTask.task.text)
+            setDay(extTask.task.day)
         }
 
-    },[editTaskFunc])
+    },[extTask])
+  
 
     const onSubmit =(e) => {
         e.preventDefault()
@@ -27,16 +25,10 @@ export const Addtask = ({onAdd,editTaskFunc,taskEdit,tasks,updateTask}) => {
         }
 
         
-        if(editTaskFunc.edit === true ){
-            
-            //this is where the magic happens
-            updateTask(editTaskFunc.item.id,{text,day,reminder})
-            
-        }
 
-        else{
+        
             onAdd({text, day, reminder})
-        }
+        
        
         setText('')
         setDay('')
