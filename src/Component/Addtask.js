@@ -1,9 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect , useContext } from 'react';
+import TaskContext from '../Context/Taskcontext';
 
 
-export const Addtask = ({onAdd,extTask}) => {
+
+export const Addtask = () => {
+    const {addTask,extTask,updateTask} = useContext(TaskContext)
     const [text,setText] = useState('')
     const [day,setDay] = useState('')
     const [reminder,setReminder] = useState(false)
@@ -12,24 +14,35 @@ export const Addtask = ({onAdd,extTask}) => {
         if(extTask.edit === true){
             setText(extTask.task.text)
             setDay(extTask.task.day)
+            setReminder(extTask.task.reminder)
         }
 
     },[extTask])
   
 
     const onSubmit =(e) => {
+
+        let newTask = {
+            text,
+            day,
+            reminder
+        }
+
         e.preventDefault()
+
         if(!text){
             alert('Please add a task')
             return
         }
 
-        
+        if(extTask.edit === true){
+            updateTask(extTask.task.id , newTask)
+        }
 
-        
-            onAdd({text, day, reminder})
-        
-       
+        else{
+            addTask(newTask)
+        }
+
         setText('')
         setDay('')
         setReminder(false)
@@ -71,7 +84,6 @@ export const Addtask = ({onAdd,extTask}) => {
                         type ="submit"
                         value ="Save task"
                         className = "btn btn"
-
                     />
                 </div>
                 

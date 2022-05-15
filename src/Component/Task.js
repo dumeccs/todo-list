@@ -1,25 +1,38 @@
 import React from 'react';
 import {FaTimes, FaEdit} from "react-icons/fa/index.esm"
+import { useContext } from 'react';
+import TaskContext from '../Context/Taskcontext';
 
-export const Task = ({task,onDelete,onToggle,editTask}) => {
+
+
+
+export const Task = () => {
+
+  const {tasks,deleteTask,editTask, toggleReminder} = useContext(TaskContext)
  
+  
   return (
-  <div className ={`task ${task.reminder ? "reminder" : ''}` } onDoubleClick={()=>onToggle(task.id)}>
+    
+  <div className ={`task ${tasks.reminder ? "reminder" : ''}` } onDoubleClick={()=>toggleReminder(tasks.id)}>
       <h3 >
-        
-          {task.text}
+         
+          {tasks.text}
           <FaEdit 
-            onClick={() => editTask(task)}
+            onClick={() => editTask(tasks)}
+            style = {{
+
+              
+            }}
           /> 
           <FaTimes 
           style={{color :"red"}} 
-          onClick={()=>onDelete(task.id)}
+          onClick={()=>deleteTask(tasks.id)}
           />
        
 
 
        </h3>
-      <p>{task.day}</p>
+      <p>{tasks.day}</p>
   </div>
   );
 };
